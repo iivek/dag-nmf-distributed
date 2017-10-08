@@ -1,0 +1,3 @@
+[submodule "resources/matlab/external-lib/bnt"]
+	path = resources/matlab/external-lib/bnt
+	url = https://github.com/bayesnet/bnt
