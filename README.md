@@ -4,6 +4,13 @@ An implementation of the learning algorithm from https://github.com/iivek/dag-co
 Hyperparameter optimization has not been implemented.
 For more information, please visit the aforementioned link.
 
+## Example
+
+Decomposition results on a small synthetic dataset are shown below.
+![Reconstruction](/resources/matlab/example-reconstruction.png)
+![Latent factors](/resources/matlab/example-factors.png)
+The generated (oracle) matrix is low-rank, with known correlations in the latent factors. The algorithm has been presented with only 10% of the oracle data with the goal of reconstructing the rest. In case correlations are embedded into the algorithm, reconstruction is closer to the oracle as compared to the correlation-ignorant decomposition.
+
 ## Usage
 
 Currently, both the input and output data are in form of .mat files and MATLAB API is used for I/O. An example of how to format the data can be bound under /resources. How the data and parameters are fed to the algorithm and how the algorithm is run can be seen in main.cpp.
