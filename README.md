@@ -1,4 +1,4 @@
-ynopsis
+## Synopsis
 
 An implementation of the learning algorithm from https://github.com/iivek/dag-constrained-nmf in an older version of Graphlab, by team from Carnegie Mellon University.
 Hyperparameter optimization has not been implemented.
