@@ -23,7 +23,6 @@ public:
             
     /* elements of row this class describes, ordered by increasing indices */
     element_type* values;
-    //std::vector<element_type> values;
     
     void accept(VertexVisitor &v, gl::iscope& scope, gl::icallback& schedule);
     void updateFunction(gl::iscope& scope, gl::icallback& scheduler);

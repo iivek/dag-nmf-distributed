@@ -18,25 +18,19 @@
 #include <vector>
 
 TmpCol::TmpCol(unsigned int numElements)
-//        :values(numElements)
 {
-    //    std::cout << "TmpCol constructor" << std::endl;
     this->numElements = numElements;
     this->values = new element_type[this->numElements];
 }
 
 TmpCol::TmpCol(const TmpCol& orig)
-//         :values(orig.getNumElements())
 {
-    //    std::cout << "TmpCol copy constructor" << std::endl;   
-//    std::copy(orig.values.begin(), orig.values.end(), this->values.begin());   
     this->numElements = orig.numElements;
     this->values = new element_type[this->numElements];
     memcpy(this->values, orig.values, sizeof (element_type) * this->numElements);
 }
 
 TmpCol::~TmpCol() {
-    //    std::cout << "in TmpCol destructor" << std::endl;
     if (this->numElements > 0) {
         delete(values);
     }
@@ -48,12 +42,10 @@ UpdateFunctionDelegator* TmpCol::clone() {
 }
 
 void TmpCol::accept(VertexVisitor &v, gl::iscope& scope, gl::icallback& schedule) {
-    //        std::cout << "SparseCol accepted" << std::endl;
     v.visit(this, scope, schedule);
 }
 
 void TmpCol::updateFunction(gl::iscope& scope, gl::icallback& scheduler) {
-//    std::cout << "TmpCol update invoked, " << scope.color() << std::endl;
     /* Get a reference to the vertex data and visible edges */
     //    vertex_data& us = scope.vertex_data();    
     gl::edge_list in_edges = scope.in_edge_ids();
@@ -88,7 +80,6 @@ void TmpCol::updateFunction(gl::iscope& scope, gl::icallback& scheduler) {
         const VertexProxy& neighbor = scope.neighbor_vertex_data(sourcev);
         const VCol& delegator = (const VCol&) *neighbor.getDelegator();
         right = &delegator.expELogValues[0];
-//        std::cout<<"here VCOl    "<<delegator.scaleRelatedValues[0]<<std::endl;
     }
 
     /* Lt*Lv */
@@ -104,7 +95,5 @@ void TmpCol::updateFunction(gl::iscope& scope, gl::icallback& scheduler) {
     for (int i = 0; i<this->getNumElements(); ++i) {
         this->values[i] = *rawXcol++ / this->values[i];
     }
-//    std::cout<<std::endl;
-
 }
 

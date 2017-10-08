@@ -48,11 +48,9 @@ class XColWrapper : public VertexProxy {
 public:
 
     XColWrapper(unsigned int numElements) {
-//        std::cout<<"XColWrapper constructor"<<std::endl;
         this->essence = new XCol(numElements);
     }
     XColWrapper(const XColWrapper& orig)      {
-//        std::cout<<"XColWrapper copy constructor"<<std::endl;
         //essence = new XCol();
         this->essence = orig.essence->clone();
     }

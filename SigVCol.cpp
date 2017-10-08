@@ -11,9 +11,6 @@
 #include "VCol.h"
 #include "VertexVisitor.h"
 
-//#include "MessageCollector.h"
-
-//#include <cblas.h>
 #include <cblas.h>
 
 #include <iostream>
@@ -24,19 +21,13 @@
 using namespace std;
 
 SigVCol::SigVCol()
-//        : values( VertexProxy::K->get_val() )
 {
-    //    std::cout << "in SigVCol constructor" << std::endl;
     this->values = new element_type[VertexProxy::K->get_val()];
     memset(this->values, 0, sizeof (element_type) * VertexProxy::K->get_val());
 }
 
 SigVCol::SigVCol(const SigVCol& orig)
-//        : values( VertexProxy::K->get_val() )
 {
-    //    std::cout << "in SigVCol copy constructor" << std::endl;
-    
-//    std::copy(orig.values.begin(), orig.values.end(), this->values.begin());
     this->values = new element_type[VertexProxy::K->get_val()];
     memcpy(this->values, orig.values, sizeof (element_type) * VertexProxy::K->get_val());
 }
@@ -56,8 +47,6 @@ void SigVCol::accept(VertexVisitor &v, gl::iscope& scope, gl::icallback& schedul
 }
 
 void SigVCol::updateFunction(gl::iscope& scope, gl::icallback& scheduler) {
-    std::cout << "SigVCol update invoked, " << scope.color() << std::endl;
-
     /* Get a reference to the vertex data and visible edges */
     //    vertex_data& us = scope.vertex_data();    
 
@@ -109,24 +98,4 @@ void SigVCol::updateFunction(gl::iscope& scope, gl::icallback& scheduler) {
             this->values[row] *= delegator.expELogValues[row];
         }
     }
-
-    //   scheduler.add_task(gl::update_task(scope.vertex(), update_function), 1.0);
 }
-
-/*
-void SigVCol::contributionToParent(const VCol* const parent,
-        const DiscreteCol * const discrete, element_type* messageAccumulator) const {
-//    std::cout<<"SigVCol::contributionToParent"<<std::endl;
-    element_type* second = &messageAccumulator[VertexProxy::K->get_val()];
-    for (int row = 0; row < VertexProxy::K->get_val(); ++row) {
-        second[row] += values[row];
-    }     
-}
-
-void SigVCol::acceptAsChild( const MessageCollector& parent_, const VCol& parent,
-        const DiscreteCol* const discrete, element_type* messageAccumulator ) const     {
-    std::cout<<"SigVCol::acceptAsChild"<<std::endl;
-    parent_.visitChild(this, &parent, discrete, messageAccumulator);
-    
-}
-*/

@@ -42,11 +42,9 @@ class SupportXColWrapper : public VertexProxy {
 public:
 
     SupportXColWrapper(unsigned int numElements) {
-//        std::cout<<"SupportXColWrapper constructor"<<std::endl;
         essence = new SupportXCol(numElements);
     }
     SupportXColWrapper(const SupportXColWrapper& orig)      {
-//        std::cout<<"SupportXColWrapper copy constructor"<<std::endl;
 //        essence = new SupportXCol();
         essence = orig.essence->clone();
     }

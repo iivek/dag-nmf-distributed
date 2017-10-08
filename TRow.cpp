@@ -13,9 +13,6 @@
 
 #include "VertexVisitor.h"
 
-//#include "MessageCollector.h"
-
-//#include "cblas.h"
 #include <cblas.h>
 #include "math.h"
 #include <boost/math/special_functions/digamma.hpp>
@@ -25,25 +22,14 @@
 #include <vector>
 
 TRow::TRow(unsigned int row)
-//        :eValues(VertexProxy::K->get_val())
-//        ,expELogValues(VertexProxy::K->get_val())
 {
-//    std::cout << "in TRow constructor" << std::endl;
     this->row = row;
     this->eValues = new element_type[VertexProxy::K->get_val()];
     this->expELogValues = new element_type[VertexProxy::K->get_val()];
 }
 
 TRow::TRow(const TRow& orig)
-//        :eValues(VertexProxy::K->get_val())
-//        ,expELogValues(VertexProxy::K->get_val())
 {
-    // copying values member
-//    std::cout << "in TRow copy constructor" << std::endl;   
-//    this->row = orig.row;
-//    std::copy(orig.eValues.begin(), orig.eValues.end(), this->eValues.begin());
-//    std::copy(orig.expELogValues.begin(), orig.expELogValues.end(), this->expELogValues.begin());
-    
     this->eValues = new element_type[VertexProxy::K->get_val()];
     this->expELogValues = new element_type[VertexProxy::K->get_val()];
     this->row = orig.row;
@@ -52,7 +38,6 @@ TRow::TRow(const TRow& orig)
 };
 
 TRow::~TRow() {
-//    std::cout << "TRow destructor" << std::endl;
     delete(this->eValues);
     delete(this->expELogValues);
 }
@@ -63,12 +48,10 @@ UpdateFunctionDelegator* TRow::clone() {
 }
 
 void TRow::accept(VertexVisitor& v, gl::iscope& scope, gl::icallback& schedule) {
-//            std::cout << "TRow accepted" << std::endl;
     v.visit(this, scope, schedule);
 }
 
 void TRow::updateFunction(gl::iscope& scope, gl::icallback& scheduler) {
-    std::cout << "TRow update invoked, " << scope.color() <<std::endl;
     gl::edge_list in_edges = scope.in_edge_ids();
 
     /* The order in which vertices are fetched is important here - as listed in 
@@ -99,7 +82,6 @@ void TRow::updateFunction(gl::iscope& scope, gl::icallback& scheduler) {
      */
     for(size_t i = 0; i < VertexProxy::K->get_val(); ++i) {
         alpha[i] = delegatorTHyperRow.aValues[i] + delegatorSigTRow.values[i];
-        std::cout << delegatorTHyperRow.aValues[i] <<std::endl;
     }
     
     /* TODO: SIMD addition
@@ -125,23 +107,4 @@ void TRow::updateFunction(gl::iscope& scope, gl::icallback& scheduler) {
         this->expELogValues[i] = exp(boost::math::digamma(alpha[i]))*beta[i];
     }
       
-    //   scheduler.add_task(gl::update_task(scope.vertex(), update_function), 1.0);
 }
-
-/*
-void TRow::contributionToParent( const VCol* const parent, 
-    const DiscreteCol* const discrete, element_type* messageAccumulator ) const     {
-//    std::cout<<"        TRow::contributionToParent"<<std::endl;
-    
-    element_type* first = &messageAccumulator[0];
-    for(int col = 0; col< VertexProxy::K->get_val(); ++col)    {
-        first[col] -= eValues[col];
-    }
-}
-
-void TRow::acceptAsChild( const MessageCollector& parent_, const VCol& parent,
-        const DiscreteCol* const discrete, element_type* messageAccumulator ) const {
-    std::cout<<"TRow::acceptAsChild"<<std::endl;
-    parent_.visitChild(this, &parent, discrete, messageAccumulator);
-}
- */

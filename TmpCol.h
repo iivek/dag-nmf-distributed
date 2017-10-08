@@ -21,7 +21,6 @@ public:
     element_type* values;
     unsigned int numElements;           // number of nonzero elements in this col
     const unsigned int getNumElements() const      {       return numElements;    }           // number of nonzero elements in this col
-
 //    std::vector<element_type> values;
 //    const unsigned int getNumElements() const      {       return values.size();    }           // number of nonzero elements in this col
     
@@ -49,11 +48,9 @@ class TmpColWrapper : public VertexProxy {
 public:
 
     TmpColWrapper(unsigned int numElements) {
-//        std::cout<<"TmpColWrapper constructor"<<std::endl;
         essence = new TmpCol(numElements);
     }
     TmpColWrapper(const TmpColWrapper& orig)      {
-//        std::cout<<"TmpColWrapper copy constructor"<<std::endl;
 //        essence = new TmpCol();
         essence = orig.essence->clone();
     }

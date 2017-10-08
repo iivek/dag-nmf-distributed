@@ -152,97 +152,11 @@ int main(int argc, char** argv) {
     glcore.add_task_to_all(nmf->delegateUpdateFunction, 1.0); // used with chromatic scheduler, it simply sets the default update function            
     
     cout << endl << "Stuff before start() took " << t.elapsed()<<endl;
-
     
     double runtime = glcore.start();
     
-    cout <<endl << "All Done" << endl;       
-
     // output to a . mat
     nmf->matOutput(glcore.graph(), "./resources/matlab/graphlab_test_out.mat");
-    
-    /* SigT
-     */
-    cout << endl << "SigT" << endl;
-    for (size_t v = nmf->sigTRowOffset; v < nmf->sigTRowOffset + nmf->m; ++v) {
-        VertexProxy vertex = glcore.graph().vertex_data(v);
-        for (int col = 0; col < nmf->k; ++col) {
-            // note: copy constructors are called below
-            cout << ((SigTRow*) (vertex.getDelegator()))->values[col] << ' ';
-        }
-        cout << endl;
-    }
-    /*SigV
-     */
-    cout << endl << "SigV" << endl;
-    for (unsigned int row = 0; row < nmf->k; ++row) {
-        for (size_t v = nmf->sigVColOffset; v < nmf->sigVColOffset + nmf->n; ++v) {
-            VertexProxy vertex = glcore.graph().vertex_data(v);
-            // note: copy constructors are called below
-            cout << ((SigVCol*) (vertex.getDelegator()))->values[row] << ' ';
-        }
-        cout << endl;
-    }
-    /* T
-     */
-    cout << endl << "T: moment 1" << endl;
-    for (size_t v = nmf->tRowOffset; v < nmf->tRowOffset + nmf->m; ++v) {
-        VertexProxy vertex = glcore.graph().vertex_data(v);
-        for (int col = 0; col < nmf->k; ++col) {
-            // note: copy constructors are called below
-            cout << ((TRow*) (vertex.getDelegator()))->eValues[col] << " ";
-        }
-        cout << endl;
-    }
-    cout << endl << "T: moment 2, exped" << endl;
-    for (size_t v = nmf->tRowOffset; v < nmf->tRowOffset + nmf->m; ++v) {
-        VertexProxy vertex = glcore.graph().vertex_data(v);
-        for (int col = 0; col < nmf->k; ++col) {
-            // note: copy constructors are called below
-            cout << log(((TRow*) (vertex.getDelegator()))->expELogValues[col]) << " ";
-        }
-        cout << endl;
-    }
-    /* V
-     */
-    cout << endl << "V: moment 1" << endl;
-    for (int row = 0; row < nmf->k; ++row) {
-        for (size_t col = 0; col<nmf->vColIDs.size(); ++col) {
-            VertexProxy vertex = glcore.graph().vertex_data(nmf->vColIDs[col]);
-            // note: copy constructors are called below
-            cout << ((VCol*) (vertex.getDelegator()))->scaleRelatedValues[row] << " ";
-        }
-        cout << endl;
-    }
-    cout << endl << "V: moment 2, exped" << endl;
-    for (int row = 0; row < nmf->k; ++row) {
-        for (size_t col = 0; col<nmf->vColIDs.size(); ++col) {
-            VertexProxy vertex = glcore.graph().vertex_data(nmf->vColIDs[col]);
-            // note: copy constructors are called below
-            cout << log(((VCol*) (vertex.getDelegator()))->expELogValues[row]) << " ";
-        }
-        cout << endl;
-    }
-    /* Aux
-     */
-    cout << endl << "Aux: moment 1" << endl;
-    for (int row = 0; row < nmf->k; ++row) {
-        for (size_t col = 0; col<nmf->auxColIDs.size(); ++col) {
-            VertexProxy vertex = glcore.graph().vertex_data(nmf->auxColIDs[col]);
-            // note: copy constructors are called below
-            cout << ((AuxCol*) (vertex.getDelegator()))->scaleRelatedValues[row] << " ";
-        }
-        cout << endl;
-    }
-    cout << endl << "Aux: moment 2, exped" << endl;
-    for (int row = 0; row < nmf->k; ++row) {
-        for (size_t col = 0; col<nmf->auxColIDs.size(); ++col) {
-            VertexProxy vertex = glcore.graph().vertex_data(nmf->auxColIDs[col]);
-            // note: copy constructors are called below
-            cout << ((AuxCol*) (vertex.getDelegator()))->eLogValues[row] << " ";
-        }
-        cout << endl;
-    }
 
     return 0;
 }

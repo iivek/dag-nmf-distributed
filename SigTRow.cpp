@@ -12,7 +12,6 @@
 #include "SupportXCol.h"
 #include "VertexVisitor.h"
 
-//#include <cblas.h>
 #include <cblas.h>
 
 #include <iostream>
@@ -22,18 +21,13 @@
 using namespace std;
 
 SigTRow::SigTRow()
-//        : values(VertexProxy::K->get_val())
 {
-//    std::cout << "in SigTRow constructor" << std::endl;
     this->values = new element_type[VertexProxy::K->get_val()];
     memset(this->values, 0, sizeof (element_type) * VertexProxy::K->get_val());
 }
 
 SigTRow::SigTRow(const SigTRow& orig)
-//        : values(VertexProxy::K->get_val())
 {
-//    std::cout << "in SigTRow copy constructor" << std::endl;      
-//    std::copy(orig.values.begin(), orig.values.end(), this->values.begin());
     this->values = new element_type[VertexProxy::K->get_val()];
     memcpy(this->values, orig.values, sizeof (element_type) * VertexProxy::K->get_val());
 }
@@ -53,8 +47,6 @@ void SigTRow::accept(VertexVisitor &v, gl::iscope& scope, gl::icallback& schedul
 }    
 
 void SigTRow::updateFunction(gl::iscope& scope, gl::icallback& scheduler) {
-    std::cout << "SigTRow update invoked, " << scope.color() <<std::endl;
-
     /* Get a reference to the vertex data and visible edges */
     //    vertex_data& us = scope.vertex_data();    
 
@@ -103,9 +95,6 @@ void SigTRow::updateFunction(gl::iscope& scope, gl::icallback& scheduler) {
         const element_type& multiplier = delegator3.values[location];                               
         
         cblas_daxpy(VertexProxy::K->get_val(), multiplier, buffer, 1, &this->values[0], 1);
-        //std::cout<<this->values[0]<<" "<<this->values[1]<<" "<<this->values[2] << " "<<std::endl;
-        //std::cout<<buffer[0]<<" "<<buffer[1]<<" "<<buffer[2] << " "<<std::endl;
-        
     }
 
     /* Fetching TRow
@@ -115,6 +104,5 @@ void SigTRow::updateFunction(gl::iscope& scope, gl::icallback& scheduler) {
     for (unsigned int col = 0; col < VertexProxy::K->get_val(); ++col) {
         this->values[col] *= buffer[col];
     } 
-    //   scheduler.add_task(gl::update_task(scope.vertex(), update_function), 1.0);
 }
 

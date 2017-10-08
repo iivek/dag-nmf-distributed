@@ -28,11 +28,9 @@ public:
     static gl::glshared_const<unsigned int>* N;
     
     VertexProxy(){
-//        std::cout<<"proxy constructor called"<<std::endl;
     };
     
     VertexProxy(const VertexProxy& orig)   {
-//        std::cout<<"proxy copy constructor called"<<std::endl;        
         this->essence = orig.essence->clone();
     }
     

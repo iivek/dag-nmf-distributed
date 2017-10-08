@@ -1,9 +1,6 @@
 /* Base class -inherit from it and wrap it into vertexProxy. Then pass it to 
  * graphlab's add_vertex
  * 
- * 
- * 
- * 
  *  * File:   UpdateFunctionDelegator.h
  * Author: ivek
  *
